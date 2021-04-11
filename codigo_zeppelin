@@ -1,0 +1,13 @@
+import org.apache.spark.SparkContext._
+import org.apache.spark.sql.SparkSession._
+import org.apache.spark.sql.types.{IntegerType, StringType, StructType}
+
+def practicaBDProcessingZeppelin() {
+    val spark = SparkSession.builder().appName("PracticaBDProcessingZeppelin").master("local").getOrCreate()
+    val schema = new StructType().add("id",IntegerType,true).add("name",StringType,true).add("age",IntegerType,true).add("follows",IntegerType,true)
+    val df = spark.read.format("csv").schema(schema).option("delimiter",",").load("/home/keepcoding/Descargas/amigos.csv")
+    val df2 = df.count()
+    println(s"El numero de registros totales es: ${df2}")
+    
+}
+practicaBDProcessingZeppelin()
